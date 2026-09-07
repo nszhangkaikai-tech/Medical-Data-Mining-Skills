@@ -1,0 +1,110 @@
+{
+  "study_type": "diagnostic",
+  "data_mode": "simulated",
+  "endpoint": "disease_status",
+  "truth_source": "outcome",
+  "censoring_def": "",
+  "input_files": [
+    {
+      "path": "data.csv",
+      "sha256": "a2a957a0a6450fbe91f485e5d239472a92e3ff22cdb323ab87553c171520f51e",
+      "rows": 10,
+      "cols": 5,
+      "description": "simulated diagnostic cohort"
+    }
+  ],
+  "column_map": {
+    "id": "id",
+    "time": "",
+    "event": "",
+    "outcome": "outcome"
+  },
+  "split_manifest": {
+    "train": [
+      "P001",
+      "P002",
+      "P003",
+      "P004",
+      "P005"
+    ],
+    "validation": [
+      "P006",
+      "P007",
+      "P008",
+      "P009",
+      "P010"
+    ],
+    "test": [],
+    "external": []
+  },
+  "model_spec": {
+    "type": "logistic_regression",
+    "features": [
+      "age",
+      "sex",
+      "bmi"
+    ],
+    "preprocessing": {
+      "standardize": true,
+      "missing": "omit"
+    },
+    "coefficients": [
+      1.657848,
+      3.36909,
+      1.923156
+    ],
+    "intercept": 0.15955,
+    "threshold": 0.45
+  },
+  "metrics": {
+    "auc": 1.0,
+    "sensitivity": 1.0,
+    "specificity": 1.0,
+    "ppv": 1.0,
+    "npv": 1.0,
+    "brier": 0.0,
+    "c_index": null,
+    "time_dependent_auc": null,
+    "hr": null,
+    "or": null,
+    "i2": null
+  },
+  "sample_flow": {
+    "raw": 10,
+    "after_qc": 10,
+    "train": 5,
+    "validation": 5,
+    "test": 0,
+    "external": 0
+  },
+  "code_deps": {
+    "python": "3.12",
+    "r": "N/A",
+    "packages": {}
+  },
+  "random_seeds": [
+    42
+  ],
+  "parameters": {
+    "threshold": 0.45
+  },
+  "artifacts": [
+    "report.html"
+  ],
+  "warnings": [
+    "simulated diagnostic data"
+  ],
+  "external_validation": {
+    "status": "unavailable",
+    "external_data_path": "",
+    "external_ids": [],
+    "external_metrics": {}
+  },
+  "compliance_checklist": {
+    "STARD_2015": "partial",
+    "TRIPOD_AI": "partial",
+    "PROBAST_AI": "not_completed"
+  },
+  "human_sign_off": false,
+  "acceptance_tests": {}
+}

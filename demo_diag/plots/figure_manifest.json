@@ -1,0 +1,89 @@
+{
+  "generated_at": "2026-09-06T12:53:32.777874+00:00",
+  "figure_count": 4,
+  "figures": [
+    {
+      "status": "generated",
+      "reason": null,
+      "paths": {
+        "png": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_diag/plots/roc_curve.png",
+        "svg": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_diag/plots/roc_curve.svg",
+        "pdf": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_diag/plots/roc_curve.pdf"
+      },
+      "metadata": {
+        "auc": 1.0,
+        "n": 2,
+        "n_pos": 1,
+        "n_neg": 1,
+        "method": "empirical rank AUC (trapezoid)",
+        "figure_type": "roc"
+      },
+      "figure_type": "roc",
+      "split": "validation",
+      "data_mode": "simulated",
+      "source_hash": "51673c6282a884f224b489082e034bf2ae66c916b5840b0251ead794813e0b9c",
+      "method": "empirical rank AUC (trapezoid)"
+    },
+    {
+      "status": "generated",
+      "reason": null,
+      "paths": {
+        "png": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_diag/plots/pr_curve.png",
+        "svg": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_diag/plots/pr_curve.svg",
+        "pdf": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_diag/plots/pr_curve.pdf"
+      },
+      "metadata": {
+        "ap": 1.0,
+        "n": 2,
+        "n_pos": 1,
+        "n_neg": 1,
+        "figure_type": "pr"
+      },
+      "figure_type": "pr",
+      "split": "validation",
+      "data_mode": "simulated",
+      "source_hash": "51673c6282a884f224b489082e034bf2ae66c916b5840b0251ead794813e0b9c"
+    },
+    {
+      "status": "generated",
+      "reason": null,
+      "paths": {
+        "png": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_diag/plots/calibration_curve.png",
+        "svg": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_diag/plots/calibration_curve.svg",
+        "pdf": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_diag/plots/calibration_curve.pdf"
+      },
+      "metadata": {
+        "brier": 0.0,
+        "bins": 10,
+        "n": 2,
+        "figure_type": "calibration"
+      },
+      "figure_type": "calibration",
+      "split": "validation",
+      "data_mode": "simulated",
+      "source_hash": "51673c6282a884f224b489082e034bf2ae66c916b5840b0251ead794813e0b9c"
+    },
+    {
+      "status": "generated",
+      "reason": null,
+      "paths": {
+        "png": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_diag/plots/roc_curve_train.png",
+        "svg": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_diag/plots/roc_curve_train.svg",
+        "pdf": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_diag/plots/roc_curve_train.pdf"
+      },
+      "metadata": {
+        "auc": 1.0,
+        "n": 8,
+        "n_pos": 4,
+        "n_neg": 4,
+        "method": "empirical rank AUC (trapezoid)",
+        "figure_type": "roc"
+      },
+      "figure_type": "roc",
+      "split": "train",
+      "data_mode": "simulated",
+      "source_hash": "51673c6282a884f224b489082e034bf2ae66c916b5840b0251ead794813e0b9c",
+      "method": "empirical rank AUC (trapezoid)"
+    }
+  ]
+}

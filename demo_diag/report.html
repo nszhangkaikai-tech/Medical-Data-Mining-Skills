@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="UTF-8"><title>Compliance Report</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:20px;background:#f5f5f5}
+h1{color:#2c3e50} h2{color:#34495e;border-bottom:2px solid #3498db;padding-bottom:6px}
+.section{background:#fff;margin:15px 0;padding:20px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.08)}
+table{border-collapse:collapse;width:100%;margin:10px 0} th,td{border:1px solid #ddd;padding:6px;font-size:12px;text-align:left} th{background:#f2f2f2}
+pre{background:#f8f9fa;padding:12px;border-radius:6px;overflow:auto;font-size:12px}
+img{max-width:100%;height:auto;border:1px solid #eee}
+.figure-caption{font-size:12px;color:#555;margin-top:6px}
+.demo{background:#fff3cd;color:#856404;padding:12px;margin:12px 0;border:2px solid #ffc107;font-weight:bold}
+.figure-gallery{border:1px solid #ddd;border-radius:6px;padding:12px;background:#fafafa;margin:16px 0}
+.risk-table-section{border:1px solid #ddd;border-radius:6px;padding:12px;background:#fff;margin:16px 0}
+</style></head><body>
+<h1>Compliance Report</h1>
+<div style="background:#fff3cd;color:#856404;padding:12px;margin:12px 0;border:2px solid #ffc107;font-weight:bold">⚠ DEMO / 模拟数据声明：本报告包含模拟生成的数据和/或演示值。所有数值仅用于工作流演示，不得用于临床决策、基金申请或学术发表。</div>
+<div class="section">
+<h2>Provenance Summary</h2>
+<table>
+<tr><th>Field</th><th>Value</th></tr>
+<tr><td>Study Type</td><td>diagnostic</td></tr>
+<tr><td>Data Mode</td><td>simulated</td></tr>
+<tr><td>Endpoint</td><td>disease_status</td></tr>
+<tr><td>Truth Source</td><td>outcome</td></tr>
+<tr><td>Censoring Def</td><td></td></tr>
+</table>
+</div>
+<div class="section">
+<h2>Figures</h2>
+<table>
+<tr><th>Figure</th><th>Split</th><th>Status</th><th>File</th><th>Metadata</th></tr>
+<tr><td>roc</td><td>validation</td><td>generated</td><td>roc_curve.png</td><td>auc=1.0, n=2, n_pos=1, n_neg=1, method=empirical rank AUC (trapezoid)</td></tr>
+<tr><td>pr</td><td>validation</td><td>generated</td><td>pr_curve.png</td><td>ap=1.0, n=2, n_pos=1, n_neg=1</td></tr>
+<tr><td>calibration</td><td>validation</td><td>generated</td><td>calibration_curve.png</td><td>brier=0.0, bins=10, n=2</td></tr>
+<tr><td>roc</td><td>train</td><td>generated</td><td>roc_curve_train.png</td><td>auc=1.0, n=8, n_pos=4, n_neg=4, method=empirical rank AUC (trapezoid)</td></tr>
+
+</table>
+</div>
+<!-- FIGURE_GALLERY_START -->
+<div class="figure-gallery">
+<h2>Evaluation Figures</h2>
+<div style="margin:10px 0;padding:10px;border:1px solid #ddd;border-radius:6px"><img src="plots/roc_curve.png" alt="roc (validation)" style="max-width:100%;height:auto"><p style="font-size:12px;color:#555;margin-top:6px">roc | split=validation | auc=1.0, n=2, n_pos=1, n_neg=1, method=empirical rank AUC (trapezoid)</p></div>
+<div style="margin:10px 0;padding:10px;border:1px solid #ddd;border-radius:6px"><img src="plots/pr_curve.png" alt="pr (validation)" style="max-width:100%;height:auto"><p style="font-size:12px;color:#555;margin-top:6px">pr | split=validation | ap=1.0, n=2, n_pos=1, n_neg=1</p></div>
+<div style="margin:10px 0;padding:10px;border:1px solid #ddd;border-radius:6px"><img src="plots/calibration_curve.png" alt="calibration (validation)" style="max-width:100%;height:auto"><p style="font-size:12px;color:#555;margin-top:6px">calibration | split=validation | brier=0.0, bins=10, n=2</p></div>
+<div style="margin:10px 0;padding:10px;border:1px solid #ddd;border-radius:6px"><img src="plots/roc_curve_train.png" alt="roc (train)" style="max-width:100%;height:auto"><p style="font-size:12px;color:#555;margin-top:6px">roc | split=train | auc=1.0, n=8, n_pos=4, n_neg=4, method=empirical rank AUC (trapezoid)</p></div>
+</div>
+<!-- FIGURE_GALLERY_END -->
+<div class="risk-table-section">
+<h2>Numbers at Risk</h2>
+<p class="figure-caption">Displays the just-before counts from the KM risk table.</p>
+</div>
+<div class="section">
+<h2>Compliance Checklist</h2>
+<table>
+<tr><th>Item</th><th>Status</th></tr>
+<tr><td>STARD_2015</td><td>partial</td></tr>
+<tr><td>TRIPOD_AI</td><td>partial</td></tr>
+<tr><td>PROBAST_AI</td><td>not_completed</td></tr>
+
+</table>
+</div>
+<div class="section">
+<h2>Warnings / Missing Items</h2>
+<table>
+<tr><th>Warning / Missing</th></tr>
+<tr><td colspan="2">simulated diagnostic data</td></tr>
+
+</table>
+</div>
+<div class="section">
+<h2>Acceptance Tests</h2>
+<table>
+<tr><th>Test</th><th>Result</th></tr>
+<tr><td>required_fields</td><td>PASS</td></tr>
+<tr><td>input_integrity</td><td>PASS</td></tr>
+<tr><td>sample_flow_non_empty</td><td>PASS</td></tr>
+<tr><td>endpoint_indicator_match</td><td>PASS</td></tr>
+<tr><td>numbers_consistency</td><td>PASS</td></tr>
+<tr><td>censoring_encoding</td><td>PASS</td></tr>
+<tr><td>train_val_isolation</td><td>PASS</td></tr>
+<tr><td>no_fictional_external</td><td>PASS</td></tr>
+<tr><td>no_unsubstantiated_clinical_claims</td><td>PASS</td></tr>
+<tr><td>metric_validity</td><td>PASS</td></tr>
+
+</table>
+</div>
+</body></html>

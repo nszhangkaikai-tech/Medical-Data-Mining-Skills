@@ -1,0 +1,1 @@
+{"results": {"required_fields": true, "input_integrity": true, "sample_flow_non_empty": true, "endpoint_indicator_match": true, "numbers_consistency": true, "censoring_encoding": true, "train_val_isolation": true, "no_fictional_external": true, "no_unsubstantiated_clinical_claims": true, "metric_validity": true}, "passed": true}

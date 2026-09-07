@@ -1,0 +1,25 @@
+{
+  "split": "validation",
+  "threshold": 0.1290256645534127,
+  "threshold_method": "train_median_risk_score",
+  "threshold_units": "log_relative_risk",
+  "data_hash": "582f3711f4c9482162bf4672e52bc303aab80ff84c10e6157734149bc7766260",
+  "model_hash": "08356243a6d7dffa3f1be851acd16d09fc053340bb39bf82b2b370269754722f",
+  "n_samples": 2,
+  "time": [
+    60.0,
+    66.0
+  ],
+  "event": [
+    1,
+    0
+  ],
+  "risk_score": [
+    -0.455654,
+    -1.446969
+  ],
+  "risk_group": [
+    "low",
+    "low"
+  ]
+}

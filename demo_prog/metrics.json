@@ -1,0 +1,18 @@
+{
+  "c_index": 1.0,
+  "time_dependent_auc": null,
+  "brier": null,
+  "auc": null,
+  "sensitivity": null,
+  "specificity": null,
+  "hr": [
+    0.1176,
+    21.2713
+  ],
+  "or": null,
+  "i2": null,
+  "unsupported_reasons": [
+    "time_dependent_auc requires censoring-aware estimator",
+    "brier requires censoring-aware estimator"
+  ]
+}

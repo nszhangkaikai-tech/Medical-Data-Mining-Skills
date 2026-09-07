@@ -1,0 +1,122 @@
+{
+  "study_type": "prognostic",
+  "data_mode": "simulated",
+  "endpoint": "OS",
+  "truth_source": "simulated_events",
+  "censoring_def": "0=censor,1=event",
+  "input_files": [
+    {
+      "path": "data.csv",
+      "sha256": "582f3711f4c9482162bf4672e52bc303aab80ff84c10e6157734149bc7766260",
+      "rows": 10,
+      "cols": 5,
+      "description": "user provided cohort"
+    }
+  ],
+  "column_map": {
+    "id": "id",
+    "time": "time",
+    "event": "event",
+    "outcome": "outcome"
+  },
+  "split_manifest": {
+    "train": [
+      "P001",
+      "P002",
+      "P003",
+      "P004",
+      "P005",
+      "P006",
+      "P007",
+      "P008"
+    ],
+    "validation": [
+      "P009",
+      "P010"
+    ],
+    "test": [],
+    "external": []
+  },
+  "model_spec": {
+    "type": "cox",
+    "features": [
+      "age",
+      "stage"
+    ],
+    "preprocessing": {
+      "standardize": true,
+      "mean": [
+        64.125,
+        2.625
+      ],
+      "std": [
+        6.791538853603062,
+        1.0606601717798212
+      ],
+      "missing": "omit"
+    },
+    "coefficients": [
+      -2.140685,
+      3.057361
+    ],
+    "intercept": 0.0,
+    "threshold": 0.1290256645534127,
+    "threshold_method": "train_median_risk_score",
+    "threshold_units": "log_relative_risk"
+  },
+  "metrics": {
+    "c_index": 1.0,
+    "time_dependent_auc": null,
+    "brier": null,
+    "auc": null,
+    "sensitivity": null,
+    "specificity": null,
+    "hr": [
+      0.1176,
+      21.2713
+    ],
+    "or": null,
+    "i2": null,
+    "unsupported_reasons": [
+      "time_dependent_auc requires censoring-aware estimator",
+      "brier requires censoring-aware estimator"
+    ]
+  },
+  "sample_flow": {
+    "raw": 10,
+    "after_qc": 10,
+    "train": 8,
+    "validation": 2,
+    "test": 0,
+    "external": 0
+  },
+  "code_deps": {
+    "python": "3.12.8",
+    "r": "N/A",
+    "packages": {
+      "numpy": "2.4.6"
+    }
+  },
+  "random_seeds": [],
+  "parameters": {
+    "optimizer": "newton_raphson",
+    "max_iter": 50,
+    "tol": 1e-06,
+    "ties": "breslow"
+  },
+  "artifacts": [
+    "report.html",
+    "predictions.json",
+    "predictions_train.json"
+  ],
+  "warnings": [],
+  "external_validation": {
+    "status": "unavailable",
+    "external_data_path": "",
+    "external_ids": [],
+    "external_metrics": {}
+  },
+  "compliance_checklist": {},
+  "human_sign_off": false,
+  "acceptance_tests": {}
+}

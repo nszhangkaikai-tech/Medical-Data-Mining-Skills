@@ -1,0 +1,184 @@
+{
+  "generated_at": "2026-09-06T13:45:31.269063+00:00",
+  "figure_count": 2,
+  "figures": [
+    {
+      "status": "generated",
+      "reason": null,
+      "paths": {
+        "png": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_prog/plots/km_curve.png",
+        "svg": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_prog/plots/km_curve.svg",
+        "pdf": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_prog/plots/km_curve.pdf"
+      },
+      "metadata": {
+        "group_counts": {
+          "low": 2
+        },
+        "n_events_total": 1,
+        "at_risk_table": {
+          "low": {
+            "times": [
+              0.0,
+              60.0,
+              66.0
+            ],
+            "n_at_risk": [
+              2,
+              2,
+              0
+            ],
+            "n_events": [
+              1
+            ]
+          }
+        },
+        "displayed_risk_table": {
+          "times": [
+            60.0,
+            63.0,
+            66.0
+          ],
+          "per_group": {
+            "low": {
+              "n_at_risk": [
+                2,
+                1,
+                1
+              ]
+            }
+          }
+        },
+        "plotted_groups": [
+          "low"
+        ],
+        "is_single_group": true,
+        "figure_type": "km"
+      },
+      "figure_type": "km",
+      "split": "validation",
+      "data_mode": "simulated",
+      "source_hash": "582f3711f4c9482162bf4672e52bc303aab80ff84c10e6157734149bc7766260"
+    },
+    {
+      "status": "generated",
+      "reason": null,
+      "paths": {
+        "png": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_prog/plots/km_curve_train.png",
+        "svg": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_prog/plots/km_curve_train.svg",
+        "pdf": "/Users/zhangkai/.hermes/skills/medical-data-mining/demo_prog/plots/km_curve_train.pdf"
+      },
+      "metadata": {
+        "group_counts": {
+          "high": 4,
+          "low": 4
+        },
+        "n_events_total": 4,
+        "at_risk_table": {
+          "high": {
+            "times": [
+              0.0,
+              12.0,
+              24.0,
+              48.0
+            ],
+            "n_at_risk": [
+              4,
+              4,
+              2,
+              1
+            ],
+            "n_events": [
+              1,
+              1,
+              1
+            ]
+          },
+          "low": {
+            "times": [
+              0.0,
+              36.0,
+              54.0
+            ],
+            "n_at_risk": [
+              4,
+              3,
+              0
+            ],
+            "n_events": [
+              1
+            ]
+          }
+        },
+        "displayed_risk_table": {
+          "times": [
+            12.0,
+            15.0,
+            18.0,
+            21.0,
+            24.0,
+            27.0,
+            30.0,
+            33.0,
+            36.0,
+            39.0,
+            42.0,
+            45.0,
+            48.0,
+            51.0,
+            54.0
+          ],
+          "per_group": {
+            "high": {
+              "n_at_risk": [
+                4,
+                3,
+                3,
+                2,
+                2,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
+              ]
+            },
+            "low": {
+              "n_at_risk": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                3,
+                2,
+                2,
+                1,
+                1,
+                1,
+                1
+              ]
+            }
+          }
+        },
+        "plotted_groups": [
+          "high",
+          "low"
+        ],
+        "is_single_group": false,
+        "figure_type": "km"
+      },
+      "figure_type": "km",
+      "split": "train",
+      "data_mode": "simulated",
+      "source_hash": "582f3711f4c9482162bf4672e52bc303aab80ff84c10e6157734149bc7766260"
+    }
+  ]
+}

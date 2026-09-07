@@ -1,0 +1,13 @@
+{
+  "auc": 1.0,
+  "sensitivity": 1.0,
+  "specificity": 1.0,
+  "ppv": 1.0,
+  "npv": 1.0,
+  "brier": 0.0,
+  "c_index": null,
+  "time_dependent_auc": null,
+  "hr": null,
+  "or": null,
+  "i2": null
+}

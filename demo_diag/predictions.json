@@ -1,0 +1,19 @@
+{
+  "split": "validation",
+  "threshold": 0.5,
+  "data_hash": "51673c6282a884f224b489082e034bf2ae66c916b5840b0251ead794813e0b9c",
+  "model_hash": "0eeb088920f7cbcbd3c38fa1a6e02c36a630324435eddeceb03f5f15bd89210c",
+  "n_samples": 2,
+  "y_true": [
+    1,
+    0
+  ],
+  "y_prob": [
+    0.996681,
+    0.003005
+  ],
+  "y_pred": [
+    1,
+    0
+  ]
+}

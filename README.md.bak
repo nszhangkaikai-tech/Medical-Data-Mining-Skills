@@ -1,0 +1,231 @@
+# medical-data-mining
+
+可复现医学科研工作流技能仓库。  
+它不是“散工具集”，而是一条从 **manifest 门禁 → 训练/验证 → 可视化 → 合规报告 → 验收测试** 的闭环流水线。
+
+## 核心定位
+
+面向医学数据分析/生物统计/临床研究场景，提供：
+
+- **研究类型路由**：诊断分类（logistic） / 预后生存（Cox PH）
+- **合规门禁**：sample flow、endpoint-indicator、censoring、train/test 隔离、外部验证、临床声明限制
+- **可复现产物**：`manifest.json`、`metrics.json`、`compliance_report.html`
+- **可选增强**：富集分析、PPI、PROBAST+AI、metrics repair
+
+## 目录架构
+
+```text
+medical-data-mining/
+├── SKILL.md                          # 技能入口说明
+├── README.md                         # 本文件
+├── requirements.txt                  # Python 依赖
+├── scripts/                          # 核心工具链
+│   ├── setup_project.py              # 初始化项目 + 生成 manifest.json 模板
+│   ├── run_workflow.py               # 工作流编排器（训练 → plots → 外部验证 → PROBAST → 富集/PPI → 验收 → 报告）
+│   ├── acceptance_tests.py           # 10 项合规检查（required_fields / numbers_consistency / censoring / ...）
+│   ├── compliance_report.py          # HTML 合规报告生成
+│   ├── plot_engine.py                # ROC / PR / calibration / KM / forest / volcano / heatmap / enrichment / PPI
+│   ├── external_validation.py        # 外部验证（ID 交叠校验 + 复用开发集参数）
+│   ├── metrics_repair.py             # metrics.json 与 manifest 不一致时的修复策略
+│   ├── probast_ai.py                 # PROBAST+AI 偏倚风险评估
+│   ├── enrichment.py                 # GO/KEGG 富集分析（g:Profiler，默认离线）
+│   ├── ppi.py                        # 蛋白互作网络（STRING，默认离线）
+│   └── trainers/                     #  trainer 实现
+│       ├── diagnostic_logistic.py    # 诊断：逻辑回归 + ROC/PR/calibration
+│       └── prognostic_cox.py         # 预后：Cox PH + KM + C-index + HR
+├── templates/                        # 研究类型模板
+│   ├── diagnostic/
+│   │   ├── manifest.json             # 诊断 manifest 模板
+│   │   └── report.html               # 诊断报告模板（figure gallery / metric summary / risk table）
+│   └── prognostic/
+│       ├── manifest.json             # 预后 manifest 模板
+│       └── report.html               # 预后报告模板
+├── tests/                            # 测试
+│   ├── test_plot_engine.py           # plot_engine 数值单测
+│   ├── test_acceptance.py            # 端到端 acceptance tests
+│   └── fixtures/                     # 合规 / 违规 fixture
+├── demo_diag/                        # 诊断完整流程演示目录
+├── demo_prog/                        # 预后完整流程演示目录
+└── references/                       # 数据库调用与截图识别参考
+```
+
+## 工具流程（CLI）
+
+### 1. 初始化项目
+
+```bash
+python3 scripts/setup_project.py \
+  --study-type diagnostic \
+  --output demo_diag \
+  --data data.csv \
+  --id-col id \
+  --outcome-col outcome
+```
+
+```bash
+python3 scripts/setup_project.py \
+  --study-type prognostic \
+  --output demo_prog \
+  --data data.csv \
+  --id-col id \
+  --time-col time \
+  --event-col event
+```
+
+### 2. 训练模型
+
+```bash
+python3 scripts/run_workflow.py --manifest demo_diag/manifest.json --train
+python3 scripts/run_workflow.py --manifest demo_prog/manifest.json --train
+```
+
+### 3. 生成评估图
+
+```bash
+python3 scripts/run_workflow.py --manifest demo_diag/manifest.json --plots
+python3 scripts/run_workflow.py --manifest demo_prog/manifest.json --plots
+```
+
+### 4. 外部验证（可选）
+
+```bash
+python3 scripts/run_workflow.py --manifest demo_diag/manifest.json --external-validation
+```
+
+### 5. 偏倚评估（可选）
+
+```bash
+python3 scripts/run_workflow.py --manifest demo_diag/manifest.json --probast
+```
+
+### 6. 富集 / PPI（可选，需联网）
+
+```bash
+python3 scripts/run_workflow.py --manifest demo_diag/manifest.json --enrichment --allow-network
+python3 scripts/run_workflow.py --manifest demo_diag/manifest.json --ppi --allow-network
+```
+
+### 7. 验收测试
+
+```bash
+python3 -m unittest tests.test_plot_engine tests.test_acceptance -v
+```
+
+或直接跑 workflow 末尾自动执行的 acceptance tests。
+
+## 研究类型支持
+
+### Diagnostic（诊断分类）
+
+| 指标 | 说明 |
+|------|------|
+| AUC | ROC 曲线下面积 |
+| Sensitivity / Specificity | 灵敏度 / 特异度 |
+| PPV / NPV | 阳性 / 阴性预测值 |
+| Brier score | 校准度 |
+| Calibration curve | 校准曲线 |
+| PR curve | 精确率-召回率曲线 |
+
+### Prognostic（预后生存）
+
+| 指标 | 说明 |
+|------|------|
+| C-index | 一致性指数 |
+| HR | 风险比（Cox 系数 exponentiate） |
+| time_dependent_auc | 时间依赖 AUC（需右删失估计器，当前返回 null） |
+| Brier score | 生存 Brier（需右删失估计器，当前返回 null） |
+| KM curve | Kaplan-Meier 曲线 + numbers-at-risk table |
+| displayed_risk_table | 图中实际渲染的风险表 just-before counts |
+
+## 合规与验收机制
+
+`acceptance_tests.py` 执行 10 项检查：
+
+1. `required_fields`：manifest 必填字段完整
+2. `input_integrity`：输入文件 hash / 行数 / 列数一致
+3. `sample_flow_non_empty`：sample_flow 无空值
+4. `endpoint_indicator_match`：研究类型与指标匹配（诊断不能报 C-index，预后不能报 AUC）
+5. `numbers_consistency`：HTML 报告中包含 manifest/metrics.json 中的数值指标
+6. `censoring_encoding`：生存研究必填 censoring_def，事件列只允许 0/1
+7. `train_val_isolation`：train/validation/test/external 无 ID 交叠
+8. `no_fictional_external`：外部验证完成时必须有数据、ID、指标
+9. `no_unsubstantiated_claims`：模拟数据必须带 DEMO 声明，禁止临床推荐用语
+10. `metric_validity`：标量指标不能是 NaN/Inf/占位 dict
+
+`compliance_report.py` 生成单一 HTML 文件，包含：
+
+- Provenance Summary
+- Figures 表格
+- Metric Summary（按研究类型只展示相关指标）
+- Figure Gallery（`--plots` 后自动嵌入）
+- Numbers at Risk（KM 风险表独立区块）
+- Compliance Checklist
+- Warnings / Missing Items
+- Acceptance Tests 结果
+
+## 可视化能力
+
+`plot_engine.py` 提供统一接口，所有图支持：
+
+- ≥300 DPI PNG + SVG/PDF 导出
+- Okabe-Ito 色盲友好调色板
+- DEMO 水印（`data_mode="simulated"`）
+- figure manifest 自动生成
+
+支持图类型：
+
+| 函数 | 图类型 | 适用研究类型 |
+|------|--------|--------------|
+| `plot_roc` | ROC 曲线 | diagnostic |
+| `plot_pr` | PR 曲线 | diagnostic |
+| `plot_calibration` | 校准曲线 | diagnostic |
+| `plot_km` | KM 生存曲线 + risk table | prognostic |
+| `plot_forest` | 森林图 | systematic review / meta |
+| `plot_volcano` | 火山图 | omics |
+| `plot_heatmap` | 热图 | omics |
+| `plot_enrichment_dot` | 富集点图 | enrichment |
+| `plot_ppi_network` | 蛋白互作网络 | PPI |
+
+## 子技能（SKILL.md 入口）
+
+仓库顶层 `SKILL.md` 指向多个子技能，覆盖：
+
+- statistical-thinking：医学统计基础思维
+- geo-online-analysis / geo-download-qc / geo-deg-analysis：GEO 芯片差异分析
+- tcga-download / tcga-survival：TCGA 下载与生存分析
+- enrichment-analysis / ppi-network：功能富集与蛋白互作
+- biomarker-discovery / clinical-prediction-model / omics-integration-validation：标志物发现与验证
+- meta-analysis-bias：Meta 偏倚评估
+- visualization / biomedical-visualization：统计可视化
+- paper-writing：论文写作
+- clinical-data-engineering / ai-assisted-research：临床数据工程与 AI 辅助科研
+
+## 依赖
+
+```text
+numpy>=1.24
+matplotlib
+```
+
+训练/外部验证/富集/PPI 额外依赖见 `requirements.txt`。
+
+## 已知限制
+
+- `time_dependent_auc` 与 Brier 需要具备右删失能力的估计器；当前 `prognostic_cox.py` trainer 返回 `null`
+- 富集分析默认使用离线示例数据，`--allow-network` 才调用真实 API
+- PPI 默认使用离线示例数据，`--allow-network` 才调用 STRING API
+- 图函数不生成虚构统计量（CI / P值 / 网络边需上游提供）
+
+## 验证命令
+
+```bash
+# 完整测试套件
+python3 -m unittest tests.test_plot_engine tests.test_acceptance -v
+
+# 端到端演示
+bash scripts/demo_end_to_end.sh
+```
+
+## License
+
+MIT
